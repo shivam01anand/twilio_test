@@ -14,8 +14,7 @@ with open('/etc/secrets/TWILIO_AUTH_TOKEN', 'r') as file:
 
 client = Client(account_sid, auth_token)
 
-
-YOUR_NUMBER = 'whatsapp:+918586906652'
+YOUR_NUMBER = 'whatsapp:+3547747119'
 TWILIO_NUMBER = 'whatsapp:+14155238886'
 
 # Track conversations for multiple users
@@ -58,7 +57,7 @@ def webhook():
                 
                 # Send thank you message
                 client.messages.create(
-                    body="Thanks for your daily report! Have a good day! 👍",
+                    body="Thanks for your daily report! 👍 This is your personal penguin anytime you need me ;) ",
                     from_=TWILIO_NUMBER,
                     to=from_number
                 )
