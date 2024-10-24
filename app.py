@@ -4,7 +4,6 @@ import pandas as pd
 from datetime import datetime
 from dotenv import load_dotenv
 import os
-
 app = Flask(__name__)
 load_dotenv()
 
@@ -33,7 +32,7 @@ QUESTIONS = [
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    logger.info("Webhook called!")
+    # logger.info("Webhook called!")
     
     incoming_msg = request.form.get('Body', '').strip()
     from_number = request.form.get('From', '')
@@ -55,7 +54,7 @@ def webhook():
         if len(conversation['responses']) >= len(QUESTIONS):
             try:
                 # Here you could save to database or spreadsheet
-                logger.info(f"Complete responses from {from_number}: {conversation['responses']}")
+                # logger.info(f"Complete responses from {from_number}: {conversation['responses']}")
                 
                 # Send thank you message
                 client.messages.create(
@@ -69,7 +68,7 @@ def webhook():
                 conversation['is_active'] = False
                 
             except Exception as e:
-                logger.error(f"Error processing complete response: {str(e)}")
+                print(f"Error processing complete response: {str(e)}")
         
         # If we still need more answers, send next question
         else:
@@ -81,7 +80,7 @@ def webhook():
                     to=from_number
                 )
             except Exception as e:
-                logger.error(f"Error sending next question: {str(e)}")
+                print(f"Error sending next question: {str(e)}")
     
     return 'OK', 200
 
@@ -100,11 +99,11 @@ def start():
             from_=TWILIO_NUMBER,
             to=YOUR_NUMBER
         )
-        logger.info("Started new conversation")
+        print("Started new conversation")
         return 'Daily report questions started!'
     
     except Exception as e:
-        logger.error(f"Error starting conversation: {str(e)}")
+        print(f"Error starting conversation: {str(e)}")
         return 'Error starting conversation', 500
 
 port = int(os.environ.get('PORT', 10000))
