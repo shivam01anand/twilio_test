@@ -2,12 +2,15 @@ from flask import Flask, request
 from twilio.rest import Client
 import pandas as pd
 from datetime import datetime
+from dotenv import load_dotenv
+
 
 app = Flask(__name__)
+load_dotenv()
 
 # Hardcoded credentials
 account_sid = 'ACa5cece43b75cb915157a22ffca14fde2'
-auth_token = 'df0088c3b04b7b813ff55f4815e1d135'
+auth_token = os.getenv('TWILIO_AUTH_TOKEN')
 client = Client(account_sid, auth_token)
 
 # Your number
