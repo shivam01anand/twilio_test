@@ -14,7 +14,7 @@ with open('/etc/secrets/TWILIO_AUTH_TOKEN', 'r') as file:
     auth_token = file.read().strip()
 
 client = Client(account_sid, auth_token)
-    
+   
 # Your number
 YOUR_NUMBER = 'whatsapp:+918586906652'
 # Twilio's sandbox number
@@ -29,6 +29,10 @@ QUESTIONS = [
     "Any blockers or challenges?",
     "What's your plan for tomorrow?"
 ]
+
+@app.route('/')
+def home():
+    return 'WhatsApp Bot is running!'
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -68,5 +72,7 @@ def start():
     )
     return 'First question sent!'
 
+# This is important for Render
+port = int(os.environ.get('PORT', 10000))
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', port=port)
