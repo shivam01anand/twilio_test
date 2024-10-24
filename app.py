@@ -10,9 +10,11 @@ load_dotenv()
 
 # Hardcoded credentials
 account_sid = 'ACa5cece43b75cb915157a22ffca14fde2'
-auth_token = os.getenv('TWILIO_AUTH_TOKEN')
-client = Client(account_sid, auth_token)
+with open('/etc/secrets/TWILIO_AUTH_TOKEN', 'r') as file:
+    auth_token = file.read().strip()
 
+client = Client(account_sid, auth_token)
+    
 # Your number
 YOUR_NUMBER = 'whatsapp:+918586906652'
 # Twilio's sandbox number
